@@ -1,0 +1,178 @@
+/* hearth.
+   ------------------------------------------------------------------
+   Simple on purpose. One column, one accent, no cards, no icon library,
+   no hero. The page is short because the product is explained by using it,
+   not by scrolling.
+
+   Rules kept from the longer version, because they are what stop "simple"
+   from becoming "default":
+     - warm paper and warm rules, never a cool near-black with a grey hairline
+     - a real serif for headings, at a real optical tracking
+     - the only symbol on the page is our own flame, drawn as a path
+   ------------------------------------------------------------------ */
+
+:root {
+  --paper:   #f6f2e9;
+  --paper-2: #efe9dc;
+  --ink:     #191512;
+  --ink-2:   #443b31;
+  --ink-3:   #7a6f60;
+  --rule:    #ddd2bd;
+  --ember:   #c4501f;
+  --ember-2: #e8a06f;
+
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans:  'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono:  'Martian Mono', ui-monospace, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:   #17130f;
+    --paper-2: #1f1a15;
+    --ink:     #f3ede2;
+    --ink-2:   #d2c8b9;
+    --ink-3:   #978c7d;
+    --rule:    #362e25;
+    --ember:   #e4722f;
+    --ember-2: #8a4a22;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  max-width: 46rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+/* ---- header ---------------------------------------------------------- */
+
+header.site {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding: 1.6rem 0 3.4rem;
+  flex-wrap: wrap;
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  color: var(--ink);
+}
+.wordmark svg { width: 1.15em; height: 1.15em; display: block; }
+.wordmark .f1 { fill: var(--ember); }
+.wordmark .f2 { fill: var(--ember-2); }
+
+nav.site { display: flex; gap: 1.3rem; font-size: 0.9rem; flex-wrap: wrap; }
+nav.site a { color: var(--ink-3); text-decoration: none; }
+nav.site a:hover { color: var(--ink); }
+
+/* ---- type ------------------------------------------------------------ */
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  /* Deliberately modest. This is a sentence, not a billboard. */
+  font-size: clamp(1.75rem, 4.4vw, 2.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.022em;
+  margin: 0 0 0.9rem;
+}
+h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.35rem;
+  letter-spacing: -0.018em;
+  margin: 0 0 0.5rem;
+}
+p { margin: 0 0 1rem; color: var(--ink-2); }
+p.lead { font-size: 1.05rem; }
+
+a { color: var(--ink); text-decoration-color: var(--rule); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--ember); }
+
+.meta {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--ink-3);
+  line-height: 1.9;
+  margin: 0.7rem 0 0;
+}
+.meta a { color: var(--ink-3); }
+
+/* ---- the two products ------------------------------------------------ */
+
+.products { margin: 2.6rem 0 0; }
+.product {
+  border-top: 1px solid var(--rule);
+  padding: 1.6rem 0 1.9rem;
+}
+.product p { font-size: 0.97rem; }
+
+.btn {
+  display: inline-block;
+  margin-top: 0.4rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 0.94rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 3px;
+  border: 1px solid var(--ink);
+  text-decoration: none;
+}
+.btn:hover { background: var(--ember); border-color: var(--ember); color: #fff; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.ghost:hover { background: transparent; color: var(--ember); }
+
+/* ---- the two prose sections ------------------------------------------ */
+
+.policy, .plain {
+  border-top: 1px solid var(--rule);
+  padding: 1.7rem 0 0;
+  margin-top: 0.6rem;
+}
+.policy p, .plain p { font-size: 0.95rem; }
+
+pre {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.7;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.75rem 0.85rem;
+  margin: 0 0 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  color: var(--ink-2);
+}
+
+footer.site {
+  margin-top: 3rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.82rem;
+  color: var(--ink-3);
+  display: flex;
+  gap: 0.6rem 2rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+footer.site a { color: var(--ink-3); }
+
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }

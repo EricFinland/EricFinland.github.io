@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hearth</title>
+<meta name="description" content="Run open models on your own computer. A desktop app for Windows and a NixOS system for Linux. Free and open source.">
+<link rel="icon" href="favicon.svg">
+<meta property="og:title" content="hearth">
+<meta property="og:description" content="Run open models on your own computer.">
+<meta property="og:image" content="https://ericfinland.github.io/og.png">
+<meta property="og:url" content="https://ericfinland.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ericfinland.github.io/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Martian+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="hearth.css">
+</head>
+<body>
+
+<header class="site">
+  <a class="wordmark" href="/">
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path d="M16 3 C 11 10 8 13 8 19 a8 8 0 0 0 16 0 c0 -4 -3 -7 -5 -9 c0 2 -1 3 -2 3 c1 -4 -1 -9 -1 -13 z" class="f1"/>
+      <path d="M16 12 C 14 15 13 16 13 19.5 a3 3 0 0 0 6 0 c0 -2 -1 -3 -2 -4 c0 1 -1 2 -2 1 z" class="f2"/>
+    </svg>
+    hearth
+  </a>
+  <nav class="site">
+    <a href="https://ericfinland.github.io/hearth-windows/">Windows docs</a>
+    <a href="https://ericfinland.github.io/hearth/">Linux docs</a>
+    <a href="https://github.com/EricFinland/hearth-windows">GitHub</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Run open models on your own computer.</h1>
+  <p class="lead">
+    Free and open source. No account, no per-token bill, and nothing leaves the
+    machine unless you approve it.
+  </p>
+
+  <div class="products">
+    <section class="product">
+      <h2>Hearth for Windows</h2>
+      <p>
+        A desktop application. It brings its own Python and its own inference
+        engine, so nothing has to be installed first. It measures your RAM and
+        VRAM and tells you which models actually fit before you download one.
+      </p>
+      <a class="btn" href="https://github.com/EricFinland/hearth-windows/releases/latest">Download for Windows</a>
+      <p class="meta">
+        0.1.0 &middot; 19.6 MB &middot; Windows 10 or 11, 64-bit &middot;
+        <a href="#signing">unsigned, what that means</a>
+      </p>
+    </section>
+
+    <section class="product">
+      <h2>hearth for Linux</h2>
+      <p>
+        A NixOS system configuration, not an app. Models and agents run
+        sandboxed by default, every run is audited, and the whole machine is
+        one file you can rebuild or roll back.
+      </p>
+      <a class="btn ghost" href="https://ericfinland.github.io/hearth/">Read the guide</a>
+      <p class="meta">
+        v1.6 &middot; needs NixOS &middot;
+        <a href="https://github.com/EricFinland/hearth">source</a>
+      </p>
+    </section>
+  </div>
+
+  <section id="signing" class="policy">
+    <h2>Code signing policy</h2>
+    <p>
+      The Windows installer is <strong>not code signed yet</strong>. Windows
+      SmartScreen shows a full-screen panel whose only visible button is
+      &ldquo;Don&rsquo;t run&rdquo;; continuing means clicking &ldquo;More
+      info&rdquo;, then &ldquo;Run anyway&rdquo;. SmartScreen is a reputation
+      system rather than a malware verdict, and it fires on files it has not
+      seen often, including signed ones.
+    </p>
+    <p>
+      Rather than asking you to trust that, check it. Every release carries a
+      SHA-256, and every installer is built by a public GitHub Actions workflow
+      that records where it came from:
+    </p>
+    <pre>gh attestation verify Hearth-Setup-0.1.0.exe -R EricFinland/hearth-windows</pre>
+    <p>
+      Release artifacts are built only on GitHub-hosted runners, never on a
+      maintainer&rsquo;s machine, and every signing request will be approved by
+      a person. Eric Catalano is Author, Reviewer and Approver; multi-factor
+      authentication is required on the repository and the signing account. The
+      installer registers a standard Windows uninstall entry.
+    </p>
+    <p>
+      Hearth does not transfer any information to other networked systems
+      unless specifically requested by the user or the person installing or
+      operating it. Model downloads and update checks are the only
+      destinations, both user-initiated, and
+      <a href="https://ericfinland.github.io/hearth-windows/reference/privacy/">every one is listed</a>.
+    </p>
+    <p class="meta">
+      Free code signing will be provided by <a href="https://signpath.io">SignPath.io</a>,
+      certificate by the <a href="https://signpath.org">SignPath Foundation</a>.
+      Full policy: <a href="https://github.com/EricFinland/hearth-windows/blob/main/docs/code-signing-policy.md">docs/code-signing-policy.md</a>.
+    </p>
+  </section>
+
+  <section class="plain">
+    <h2>Before you trust it with anything</h2>
+    <p>
+      A local model is weaker than a hosted one. The workspace boundary stops
+      writes outside the folder you choose, but not reads and not network
+      traffic. Approving a command by reading its text is not a security
+      control.
+      <a href="https://ericfinland.github.io/hearth-windows/reference/limitations/">The limitations page</a>
+      says what each protection misses, and is the one worth reading first.
+    </p>
+  </section>
+</main>
+
+<footer class="site">
+  <span>Apache-2.0 &middot; built by <a href="https://github.com/EricFinland">Eric Catalano</a></span>
+  <span>This site sets no cookies and runs no analytics.</span>
+</footer>
+
+</body>
+</html>
