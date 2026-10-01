@@ -51,8 +51,9 @@
       </p>
       <a class="btn" href="https://github.com/EricFinland/hearth-windows/releases/latest">Download for Windows</a>
       <p class="meta">
-        0.1.0 &middot; 19.6 MB &middot; Windows 10 or 11, 64-bit &middot;
+        <span id="win-release">0.1.1 &middot; 19.6 MB</span> &middot; Windows 10 or 11, 64-bit &middot;
         <a href="#signing">unsigned, what that means</a>
+        <span id="win-downloads" hidden></span>
       </p>
     </section>
 
@@ -125,6 +126,53 @@
   <span>Apache-2.0 &middot; built by <a href="https://github.com/EricFinland">Eric Catalano</a></span>
   <span>This site sets no cookies and runs no analytics.</span>
 </footer>
+
+<script>
+  // Version, size and total installer downloads, read from GitHub's public
+  // release API in your browser. GitHub counts asset downloads itself, so
+  // this is not analytics: nothing is recorded about you, here or anywhere.
+  // If GitHub's anonymous rate limit (60 an hour per IP) is used up, the
+  // count comes from shields.io's cached copy instead (rounded, e.g. "1.2k").
+  // If both fail, the text written above stays as it is.
+  (function () {
+    var repo = 'EricFinland/hearth-windows';
+    function show(label, one) {
+      var el = document.getElementById('win-downloads');
+      el.textContent = '· ' + label + (one ? ' download' : ' downloads');
+      el.hidden = false;
+    }
+    async function fromGitHub() {
+      var n = 0, latest = null;
+      for (var page = 1; ; page++) {
+        var res = await fetch('https://api.github.com/repos/' + repo +
+          '/releases?per_page=100&page=' + page);
+        if (!res.ok) throw new Error(res.status);
+        var releases = await res.json();
+        for (var r of releases) {
+          if (r.draft) continue;
+          for (var a of r.assets) {
+            if (!/\.exe$/i.test(a.name)) continue;
+            n += a.download_count;
+            if (!latest && !r.prerelease) latest = { tag: r.tag_name, size: a.size };
+          }
+        }
+        if (releases.length < 100) break;
+      }
+      if (latest) {
+        document.getElementById('win-release').textContent =
+          latest.tag.replace(/^v/, '') + ' · ' + (latest.size / 1048576).toFixed(1) + ' MB';
+      }
+      if (n > 0) show(n.toLocaleString('en-US'), n === 1);
+    }
+    async function fromShields() {
+      var res = await fetch('https://img.shields.io/github/downloads/' + repo + '/total.json');
+      if (!res.ok) return;
+      var v = (await res.json()).value;
+      if (/^\d[\d.,]*[kMB]?$/.test(v) && v !== '0') show(v, v === '1');
+    }
+    fromGitHub().catch(fromShields).catch(function () {});
+  })();
+</script>
 
 </body>
 </html>
